@@ -16,6 +16,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "isort>=7.0.0",
     "pre-commit>=4.4.0",
     "ruff>=0.14.5",
 ]

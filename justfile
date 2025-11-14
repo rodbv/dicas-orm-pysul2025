@@ -68,4 +68,3 @@ mmigrate app='':
 # Run pre-commit hooks on all files
 pre-commit:
     uv run pre-commit run --all-files
-

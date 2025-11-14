@@ -312,4 +312,3 @@ Use `python-decouple` or `django-environ` for managing environment variables.
 - [PEP 484](https://peps.python.org/pep-0484/)
 - [Pytest Documentation](https://docs.pytest.org/)
 - [Django Best Practices](https://docs.djangoproject.com/en/stable/misc/design-philosophies/)
-
