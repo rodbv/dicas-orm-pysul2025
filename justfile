@@ -1,7 +1,7 @@
 # Django commands using uv
 
 # Run the development server (default port 8000)
-runserver port='8000':
+run port='8000':
     uv run python manage.py runserver {{port}}
 
 # Run database migrations
@@ -9,7 +9,7 @@ migrate:
     uv run python manage.py migrate
 
 # Create migration files
-makemigrations app='':
+mm app='':
     uv run python manage.py makemigrations {{app}}
 
 # Show migration status
@@ -61,7 +61,7 @@ dbshell:
     uv run python manage.py dbshell
 
 # Make migrations and migrate in one command
-mmigrate app='':
+mmm app='':
     uv run python manage.py makemigrations {{app}}
     uv run python manage.py migrate
 
