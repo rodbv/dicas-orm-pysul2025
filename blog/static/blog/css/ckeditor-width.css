@@ -1,0 +1,148 @@
+/* CKEditor - Ocupa toda largura disponível */
+.cke_editor {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.cke_editor .cke_inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.cke_editor .cke_contents {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.cke_editor .cke_wysiwyg_frame,
+.cke_editor .cke_wysiwyg_div {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Garante que o container do fieldset também use toda largura */
+.field-conteudo,
+.field-resumo,
+.field-texto {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.field-conteudo .form-row,
+.field-resumo .form-row,
+.field-texto .form-row {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Remove limitações de largura do Django Admin para campos CKEditor */
+.form-row .field-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Força largura máxima do Django Admin para campos CKEditor */
+#content .form-row {
+    max-width: 100% !important;
+}
+
+#content .field-conteudo,
+#content .field-resumo,
+#content .field-texto {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+/* Remove qualquer limite de largura dos containers */
+.admin-form-row,
+.form-row {
+    max-width: none !important;
+}
+
+/* Garante que o textarea base também seja largo */
+textarea.cke_source {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Regras mais específicas para garantir largura total */
+#content-main .form-row .field-conteudo,
+#content-main .form-row .field-resumo,
+#content-main .form-row .field-texto {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+#content-main .form-row .field-conteudo .form-row,
+#content-main .form-row .field-resumo .form-row,
+#content-main .form-row .field-texto .form-row {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Remove largura fixa do Django Admin */
+#content-main {
+    max-width: none !important;
+}
+
+#content-main .module {
+    max-width: none !important;
+}
+
+#content-main form {
+    max-width: none !important;
+}
+
+/* Força largura total nos fieldsets */
+fieldset.module {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+fieldset.module .form-row {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+/* Remove todas as limitações de largura do Django Admin */
+#content {
+    max-width: none !important;
+}
+
+.colMS {
+    max-width: none !important;
+    width: 100% !important;
+}
+
+#content-main .colM {
+    max-width: none !important;
+    width: 100% !important;
+}
+
+/* Força largura total no container principal */
+body.change-form #content-main {
+    max-width: none !important;
+    width: 100% !important;
+}
+
+body.change-form #content-main .module {
+    max-width: none !important;
+    width: 100% !important;
+}
+
+/* Remove largura fixa dos campos */
+body.change-form .form-row {
+    max-width: none !important;
+    width: 100% !important;
+}
+
+body.change-form .form-row .field-box {
+    max-width: none !important;
+    width: 100% !important;
+}

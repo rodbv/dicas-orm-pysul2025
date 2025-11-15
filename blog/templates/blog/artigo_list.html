@@ -1,0 +1,47 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Artigos - Blog{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+    <h1 class="text-4xl font-bold text-navy mb-8">Artigos Publicados</h1>
+
+    {% if artigos %}
+    {% for artigo in artigos %}
+    <article class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow border-l-4 border-laranja">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-3">
+            <a href="{% url 'blog:artigo_detail' artigo.slug %}" class="hover:text-teal transition-colors">
+                {{ artigo.titulo }}
+            </a>
+        </h2>
+
+        {% if artigo.resumo %}
+        <div class="text-gray-600 mb-4">{{ artigo.resumo|safe }}</div>
+        {% endif %}
+
+        {% if artigo.tags %}
+        <div class="flex flex-wrap gap-2 mb-4">
+            {% for tag in artigo.tags %}
+            <span class="px-3 py-1 bg-teal/10 text-teal rounded-full text-xs font-medium border border-teal/20">
+                {{ tag.nome }}
+            </span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="flex items-center flex-wrap gap-2 text-sm text-gray-500">
+            <span>Por {{ artigo.autor.full_name }}</span>
+            <span>em</span>
+            <time datetime="{{ artigo.data_exibicao|date:'c' }}">
+                {{ artigo.data_exibicao|date:"d/m/Y H:i" }}
+            </time>
+        </div>
+    </article>
+    {% endfor %}
+    {% else %}
+    <div class="bg-white rounded-lg shadow-md p-8 text-center border-2 border-laranja">
+        <p class="text-gray-600 text-lg">Nenhum artigo publicado ainda.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

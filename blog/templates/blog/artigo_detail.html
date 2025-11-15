@@ -1,0 +1,73 @@
+{% extends "blog/base.html" %}
+
+{% block title %}{{ artigo.titulo }} - Blog{% endblock %}
+
+{% block content %}
+<article class="bg-white rounded-lg shadow-lg p-8 border-l-4 border-laranja">
+    <header class="mb-6">
+        <h1 class="text-4xl font-bold text-navy mb-4">{{ artigo.titulo }}</h1>
+
+        <div class="flex items-center text-sm text-gray-500 mb-4">
+            <span>Por {{ artigo.autor.full_name }}</span>
+            {% if artigo.data_publicacao %}
+            <span class="mx-2">•</span>
+            <time datetime="{{ artigo.data_publicacao|date:'c' }}">
+                {{ artigo.data_publicacao|date:"d/m/Y à\s H:i" }}
+            </time>
+            {% endif %}
+        </div>
+
+        {% if artigo.tags %}
+        <div class="flex flex-wrap gap-2 mb-6">
+            {% for tag in artigo.tags %}
+            <span
+                class="px-3 py-1 bg-teal/10 text-teal rounded-full text-sm font-medium border border-teal/20 hover:bg-teal/20 transition-colors">
+                {{ tag.nome }}
+            </span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </header>
+
+    <div class="prose prose-lg max-w-none mb-8">
+        <div class="text-gray-700 leading-relaxed">
+            {{ artigo.conteudo|safe }}
+        </div>
+    </div>
+</article>
+
+<section class="mt-8 bg-white rounded-lg shadow-lg p-8 border-l-4 border-teal">
+    <h2 class="text-2xl font-bold text-navy mb-6">
+        {% if comentarios %}
+        {{ comentarios|length }} comentário{{ comentarios|length|pluralize }}
+        {% else %}
+        Comentários
+        {% endif %}
+    </h2>
+
+    {% if comentarios %}
+    <div class="space-y-6">
+        {% for comentario in comentarios %}
+        <div class="border-l-4 border-teal pl-4 py-2 bg-bege/50 rounded-r">
+            <div class="text-gray-800 mb-2">{{ comentario.texto|safe }}</div>
+            <div class="flex items-center text-sm text-gray-500">
+                <span class="italic text-navy">{{ comentario.autor.full_name }}</span>
+                <span class="mx-2">•</span>
+                <time datetime="{{ comentario.data_criacao|date:'c' }}">
+                    {{ comentario.data_criacao|date:"d/m/Y à\s H:i" }}
+                </time>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-gray-600">Nenhum comentário ainda. Seja o primeiro a comentar!</p>
+    {% endif %}
+</section>
+
+<div class="mt-6">
+    <a href="{% url 'blog:artigo_list' %}" class="text-teal hover:text-navy font-medium transition-colors">
+        ← Voltar para lista de artigos
+    </a>
+</div>
+{% endblock %}

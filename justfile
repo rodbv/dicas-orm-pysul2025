@@ -24,13 +24,17 @@ createsuperuser:
 shell:
     uv run python manage.py shell_plus --ipython
 
-# Run tests
-test app='':
-    uv run python manage.py test {{app}}
-
-# Run tests with coverage (if pytest is used)
-test-pytest:
+# Run tests with pytest
+test:
     uv run pytest
+
+# Run tests for specific app
+test-app app='blog':
+    uv run pytest {{app}}/
+
+# Run tests with coverage
+test-cov:
+    uv run pytest --cov=. --cov-report=html
 
 # Collect static files
 collectstatic:
@@ -68,3 +72,7 @@ mmm app='':
 # Run pre-commit hooks on all files
 pre-commit:
     uv run pre-commit run --all-files
+
+# Show SQL for a queryset (usage: just sql "Artigo.objects.all()")
+sql query='':
+    uv run python manage.py shell -c "from blog.models import Artigo, Comentario; from django.db import connection; qs = {{query}}; print('SQL:', qs.query); print('Params:', qs.query.params)"

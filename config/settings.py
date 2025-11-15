@@ -38,14 +38,17 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
-    "debug_toolbar",
+    "ckeditor",
+    # Django Debug Toolbar - Desabilitado para usar apenas Django Silk
+    # "debug_toolbar",
     "silk",
     "blog",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # Django Debug Toolbar Middleware - Desabilitado para usar apenas Django Silk
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
     "silk.middleware.SilkyMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -127,9 +130,56 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Django Debug Toolbar
+# Django Debug Toolbar - Desabilitado para usar apenas Django Silk
 # https://django-debug-toolbar.readthedocs.io/
+#
+# INTERNAL_IPS = [
+#     "127.0.0.1",
+# ]
+#
+# DEBUG_TOOLBAR_CONFIG = {
+#     "HIDE_IN_STACKTRACES": (
+#         "socketserver",
+#         "threading",
+#         "wsgiref",
+#         "debug_toolbar",
+#         "django.db",
+#         "django.core.handlers",
+#         "django.core.servers",
+#         "django.utils.decorators",
+#         "django.utils.deprecation",
+#         "django.utils.functional",
+#     ),
+#     "ENABLE_STACKTRACES": True,
+# }
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
+# CKEditor Configuration
+CKEDITOR_CONFIGS = {
+    "default": {
+        "toolbar": [
+            ["Bold", "Italic", "Underline", "Strike"],
+            ["NumberedList", "BulletedList"],
+            ["Link", "Unlink"],
+            ["Image"],
+            ["Blockquote"],
+            ["Undo", "Redo"],
+            ["Source"],
+        ],
+        "height": 400,
+        "width": "100%",
+        "toolbarCanCollapse": False,
+        "uiColor": "#f0f0f0",
+        "removeDialogTabs": "image:advanced;link:advanced",
+    },
+    "resumo": {
+        "toolbar": [
+            ["Bold", "Italic"],
+            ["Link", "Unlink"],
+            ["Source"],
+        ],
+        "height": 150,
+        "width": "100%",
+        "toolbarCanCollapse": False,
+        "uiColor": "#f0f0f0",
+    },
+}

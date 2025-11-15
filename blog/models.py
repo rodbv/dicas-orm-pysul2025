@@ -1,28 +1,53 @@
 import uuid
 
+from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+from django.utils.text import slugify
+
+
+class Tag(models.Model):
+    id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID"
+    )
+    nome = models.CharField(
+        max_length=50, unique=True, blank=False, verbose_name="Nome"
+    )
+    slug = models.SlugField(
+        max_length=50, unique=True, blank=False, verbose_name="Slug"
+    )
+
+    class Meta:
+        verbose_name = "Tag"
+        verbose_name_plural = "Tags"
+        ordering = ["nome"]
+
+    def __str__(self):
+        return self.nome
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.nome)
+        super().save(*args, **kwargs)
 
 
 class Artigo(models.Model):
-    """
-    Modelo que representa um artigo do blog.
-    """
-
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID"
     )
     titulo = models.CharField(max_length=200, verbose_name="Título")
-    slug = models.SlugField(max_length=200, unique=True, verbose_name="Slug")
+    slug = models.SlugField(
+        max_length=200, unique=True, blank=False, verbose_name="Slug"
+    )
     autor = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="artigos",
         verbose_name="Autor",
     )
-    conteudo = models.TextField(verbose_name="Conteúdo")
-    resumo = models.CharField(max_length=300, blank=True, verbose_name="Resumo")
+    conteudo = RichTextField(verbose_name="Conteúdo")
+    resumo = RichTextField(blank=True, verbose_name="Resumo", config_name="resumo")
     publicado = models.BooleanField(
         default=False, verbose_name="Publicado", db_index=True
     )
@@ -35,27 +60,24 @@ class Artigo(models.Model):
     data_atualizacao = models.DateTimeField(
         auto_now=True, verbose_name="Data de Atualização"
     )
+    tags = models.ManyToManyField(
+        Tag, related_name="artigos", blank=True, verbose_name="Tags"
+    )
 
     class Meta:
         verbose_name = "Artigo"
         verbose_name_plural = "Artigos"
-        ordering = ["-data_publicacao", "-data_criacao"]
 
     def __str__(self):
         return self.titulo
 
     def publicar(self):
-        """Marca o artigo como publicado e define a data de publicação."""
         self.publicado = True
         self.data_publicacao = timezone.now()
         self.save()
 
 
 class Comentario(models.Model):
-    """
-    Modelo que representa um comentário em um artigo.
-    """
-
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, verbose_name="ID"
     )
@@ -71,7 +93,7 @@ class Comentario(models.Model):
         related_name="comentarios",
         verbose_name="Autor",
     )
-    texto = models.TextField(verbose_name="Texto do Comentário")
+    texto = RichTextField(verbose_name="Texto do Comentário")
     data_criacao = models.DateTimeField(
         auto_now_add=True, verbose_name="Data de Criação"
     )

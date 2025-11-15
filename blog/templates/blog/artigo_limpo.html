@@ -1,0 +1,34 @@
+{% block content %}
+<div>
+    <h1>Artigos Publicados</h1>
+    {% for artigo in artigos %}
+    <article>
+        <h2>
+            <a href="{% url 'blog:artigo_detail' artigo.slug %}">
+                {{ artigo.titulo }}
+            </a>
+        </h2>
+
+        {% if artigo.resumo %}
+        <div>{{ artigo.resumo|safe }}</div>
+        {% endif %}
+
+        {% if artigo.tags %}
+        <div>
+            {% for tag in artigo.tags %}
+            <span>{{ tag.nome }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div>
+            <span>Por {{ artigo.autor.full_name }}</span>
+            <span>em</span>
+            <time datetime="{{ artigo.data_exibicao|date:'c' }}">
+                {{ artigo.data_exibicao|date:"d/m/Y H:i" }}
+            </time>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+{% endblock %}

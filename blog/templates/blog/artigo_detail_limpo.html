@@ -1,0 +1,61 @@
+{% block content %}
+<article>
+    <header>
+        <h1>{{ artigo.titulo }}</h1>
+        <div>
+            <span>Por {{ artigo.autor.get_full_name|default:artigo.autor.username }}</span>
+            {% if artigo.data_publicacao %}
+            <span>•</span>
+            <time datetime="{{ artigo.data_publicacao|date:'c' }}">
+                {{ artigo.data_publicacao|date:"d/m/Y H:i" }}
+            </time>
+            {% endif %}
+        </div>
+
+        {% if artigo.tags.all %}
+        <div>
+            {% for tag in artigo.tags.all %}
+            <span>{{ tag.nome }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </header>
+
+    <div>
+        {{ artigo.conteudo|safe }}
+    </div>
+</article>
+
+<section>
+    <h2>
+        {% if comentarios %}
+        {{ comentarios|length }} comentário{{ comentarios|length|pluralize }}
+        {% else %}
+        Comentários
+        {% endif %}
+    </h2>
+
+    {% if comentarios %}
+    <div>
+        {% for comentario in comentarios %}
+        <div>
+            <div>{{ comentario.texto|safe }}</div>
+            <div>
+                <span>{{ comentario.autor.get_full_name|default:comentario.autor.username }}</span>
+                <span>•</span>
+                <time datetime="{{ comentario.data_criacao|date:'c' }}">
+                    {{ comentario.data_criacao|date:"d/m/Y H:i" }}
+                </time>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>Nenhum comentário ainda. Seja o primeiro a comentar!</p>
+    {% endif %}
+</section>
+
+<div>
+    <a href="{% url 'blog:artigo_list' %}">← Voltar para lista de artigos</a>
+</div>
+{% endblock %}
