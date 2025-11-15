@@ -29,6 +29,16 @@ class ComentarioDTO:
 
 
 @dataclass
+class ArtigoDetailDTO:
+    titulo: str
+    conteudo: str
+    data_publicacao: datetime | None
+    autor: AutorDTO
+    tags: List[TagDTO]
+    comentarios: List[ComentarioDTO]
+
+
+@dataclass
 class ArtigoListDTO:
     titulo: str
     slug: str
@@ -41,13 +51,3 @@ class ArtigoListDTO:
     @property
     def data_exibicao(self) -> datetime:
         return self.data_publicacao or self.data_criacao
-
-
-@dataclass
-class ArtigoDetailDTO:
-    titulo: str
-    conteudo: str
-    data_publicacao: datetime | None
-    autor: AutorDTO
-    tags: List[TagDTO]
-    comentarios: List[ComentarioDTO]
