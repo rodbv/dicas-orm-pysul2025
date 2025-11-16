@@ -1,3 +1,5 @@
+[![Tests](https://github.com/rodbv/dicas-orm-pysul2025/actions/workflows/tests.yml/badge.svg)](https://github.com/rodbv/dicas-orm-pysul2025/actions/workflows/tests.yml)
+
 # ORMs em Python - PySul 2025
 
 Projeto de exemplo para a apresentação sobre boas práticas de ORM em Python/Django.
