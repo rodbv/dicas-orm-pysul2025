@@ -1,9 +1,11 @@
+{% extends "blog/base.html" %}
+
 {% block content %}
 <article>
     <header>
         <h1>{{ artigo.titulo }}</h1>
         <div>
-            <span>Por {{ artigo.autor.get_full_name|default:artigo.autor.username }}</span>
+            <span>Por {{ artigo.autor.full_name }}</span>
             {% if artigo.data_publicacao %}
             <span>•</span>
             <time datetime="{{ artigo.data_publicacao|date:'c' }}">
@@ -12,9 +14,9 @@
             {% endif %}
         </div>
 
-        {% if artigo.tags.all %}
+        {% if artigo.tags %}
         <div>
-            {% for tag in artigo.tags.all %}
+            {% for tag in artigo.tags %}
             <span>{{ tag.nome }}</span>
             {% endfor %}
         </div>
@@ -41,7 +43,7 @@
         <div>
             <div>{{ comentario.texto|safe }}</div>
             <div>
-                <span>{{ comentario.autor.get_full_name|default:comentario.autor.username }}</span>
+                <span>{{ comentario.autor.full_name }}</span>
                 <span>•</span>
                 <time datetime="{{ comentario.data_criacao|date:'c' }}">
                     {{ comentario.data_criacao|date:"d/m/Y H:i" }}
@@ -59,3 +61,4 @@
     <a href="{% url 'blog:artigo_list' %}">← Voltar para lista de artigos</a>
 </div>
 {% endblock %}
+

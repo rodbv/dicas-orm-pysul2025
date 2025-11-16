@@ -29,7 +29,7 @@ class ComentarioDTO:
 
 
 @dataclass
-class ArtigoDetailDTO:
+class ArtigoDTO:
     titulo: str
     conteudo: str
     data_publicacao: datetime | None

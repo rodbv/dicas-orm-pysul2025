@@ -13,11 +13,14 @@ dependencies = [
     "ipython>=9.7.0",
     "pytest>=9.0.1",
     "pytest-django>=4.11.1",
+    "pytest-mock>=3.14.0",
 ]
 
 [dependency-groups]
 dev = [
+    "freezegun>=1.5.5",
     "isort>=7.0.0",
+    "model-bakery>=1.20.5",
     "pre-commit>=4.4.0",
     "ruff>=0.14.5",
 ]
