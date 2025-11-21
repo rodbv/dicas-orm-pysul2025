@@ -4,7 +4,6 @@ from django.test import Client
 from django.urls import reverse
 from model_bakery import baker
 
-from blog.dto import ArtigoDTO, AutorDTO
 from blog.models import Artigo, Comentario, Tag
 
 
@@ -196,38 +195,22 @@ def test_obter_lista_artigos_quando_nao_ha_artigos_deve_retornar_200(client):
 
 
 @pytest.mark.django_db
-def test_artigo_detail_view_chama_servico_correto(client, artigo_fixture, mocker):
+def test_artigo_detail_view_retorna_artigo_correto(client, artigo_fixture):
     artigo = artigo_fixture()
     url = reverse("blog:artigo_detail", kwargs={"slug": artigo.slug})
 
-    mock_service = mocker.patch("blog.views.obter_artigo_dto_por_slug")
-    mock_service.return_value = ArtigoDTO(
-        titulo=artigo.titulo,
-        conteudo=artigo.conteudo,
-        data_publicacao=artigo.data_publicacao,
-        autor=AutorDTO(
-            username=artigo.autor.username,
-            first_name=artigo.autor.first_name,
-            last_name=artigo.autor.last_name,
-        ),
-        tags=[],
-        comentarios=[],
-    )
-
     response = client.get(url)
 
     assert response.status_code == 200
-    mock_service.assert_called_once_with(artigo.slug)
+    assert artigo.titulo.encode() in response.content
 
 
 @pytest.mark.django_db
-def test_artigo_list_view_chama_servico_correto(client, mocker):
+def test_artigo_list_view_retorna_artigos(client, artigo_fixture):
+    artigo = artigo_fixture()
     url = reverse("blog:artigo_list")
-
-    mock_service = mocker.patch("blog.views.obter_lista_artigos_dto")
-    mock_service.return_value = []
 
     response = client.get(url)
 
     assert response.status_code == 200
-    mock_service.assert_called_once()
+    assert artigo.titulo.encode() in response.content

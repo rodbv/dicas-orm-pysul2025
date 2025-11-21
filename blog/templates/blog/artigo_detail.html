@@ -8,7 +8,7 @@
         <h1 class="text-4xl font-bold text-navy mb-4">{{ artigo.titulo }}</h1>
 
         <div class="flex items-center text-sm text-gray-500 mb-4">
-            <span>Por {{ artigo.autor.full_name }}</span>
+            <span>Por {% if artigo.autor.first_name and artigo.autor.last_name %}{{ artigo.autor.first_name }} {{ artigo.autor.last_name }}{% else %}{{ artigo.autor.username }}{% endif %}</span>
             {% if artigo.data_publicacao %}
             <span class="mx-2">•</span>
             <time datetime="{{ artigo.data_publicacao|date:'c' }}">
@@ -17,9 +17,9 @@
             {% endif %}
         </div>
 
-        {% if artigo.tags %}
+        {% if artigo.tags.all %}
         <div class="flex flex-wrap gap-2 mb-6">
-            {% for tag in artigo.tags %}
+            {% for tag in artigo.tags.all %}
             <span
                 class="px-3 py-1 bg-teal/10 text-teal rounded-full text-sm font-medium border border-teal/20 hover:bg-teal/20 transition-colors">
                 {{ tag.nome }}
@@ -51,7 +51,7 @@
         <div class="border-l-4 border-teal pl-4 py-2 bg-bege/50 rounded-r">
             <div class="text-gray-800 mb-2">{{ comentario.texto|safe }}</div>
             <div class="flex items-center text-sm text-gray-500">
-                <span class="italic text-navy">{{ comentario.autor.full_name }}</span>
+                <span class="italic text-navy">{% if comentario.autor.first_name and comentario.autor.last_name %}{{ comentario.autor.first_name }} {{ comentario.autor.last_name }}{% else %}{{ comentario.autor.username }}{% endif %}</span>
                 <span class="mx-2">•</span>
                 <time datetime="{{ comentario.data_criacao|date:'c' }}">
                     {{ comentario.data_criacao|date:"d/m/Y à\s H:i" }}

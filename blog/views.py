@@ -3,14 +3,15 @@ from django.shortcuts import render
 from django.views import View
 
 from .models import Artigo
-from .services.artigo_service import obter_artigo_dto_por_slug, obter_lista_artigos_dto
 
 
 class ArtigoListView(View):
     template_name = "blog/artigo_list.html"
 
     def get(self, request: HttpRequest) -> HttpResponse:
-        artigos = obter_lista_artigos_dto()
+        artigos = Artigo.objects.filter(publicado=True).order_by(
+            "-data_publicacao", "-data_criacao"
+        )
 
         return render(request, self.template_name, context={"artigos": artigos})
 
@@ -20,10 +21,13 @@ class ArtigoDetailView(View):
 
     def get(self, request: HttpRequest, slug: str) -> HttpResponse:
         try:
-            artigo_dto = obter_artigo_dto_por_slug(slug)
+            artigo = Artigo.objects.filter(publicado=True).get(slug=slug)
+            comentarios = artigo.comentarios.filter(aprovado=True).order_by(
+                "data_criacao"
+            )
         except Artigo.DoesNotExist:
             raise Http404("Artigo não encontrado")
 
-        context = {"artigo": artigo_dto, "comentarios": artigo_dto.comentarios}
+        context = {"artigo": artigo, "comentarios": comentarios}
 
         return render(request, self.template_name, context)

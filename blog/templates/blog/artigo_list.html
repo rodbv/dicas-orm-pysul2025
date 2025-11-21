@@ -19,9 +19,9 @@
         <div class="text-gray-600 mb-4">{{ artigo.resumo|safe }}</div>
         {% endif %}
 
-        {% if artigo.tags %}
+        {% if artigo.tags.all %}
         <div class="flex flex-wrap gap-2 mb-4">
-            {% for tag in artigo.tags %}
+            {% for tag in artigo.tags.all %}
             <span class="px-3 py-1 bg-teal/10 text-teal rounded-full text-xs font-medium border border-teal/20">
                 {{ tag.nome }}
             </span>
@@ -30,10 +30,10 @@
         {% endif %}
 
         <div class="flex items-center flex-wrap gap-2 text-sm text-gray-500">
-            <span>Por {{ artigo.autor.full_name }}</span>
+            <span>Por {% if artigo.autor.first_name and artigo.autor.last_name %}{{ artigo.autor.first_name }} {{ artigo.autor.last_name }}{% else %}{{ artigo.autor.username }}{% endif %}</span>
             <span>em</span>
-            <time datetime="{{ artigo.data_exibicao|date:'c' }}">
-                {{ artigo.data_exibicao|date:"d/m/Y H:i" }}
+            <time datetime="{% if artigo.data_publicacao %}{{ artigo.data_publicacao|date:'c' }}{% else %}{{ artigo.data_criacao|date:'c' }}{% endif %}">
+                {% if artigo.data_publicacao %}{{ artigo.data_publicacao|date:"d/m/Y H:i" }}{% else %}{{ artigo.data_criacao|date:"d/m/Y H:i" }}{% endif %}
             </time>
         </div>
     </article>
