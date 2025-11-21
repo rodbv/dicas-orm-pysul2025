@@ -8,6 +8,7 @@ def obter_lista_artigos_dto() -> list[ArtigoListDTO]:
     artigos_qs = (
         Artigo.objects.filter(publicado=True)
         .only(
+            "id",
             "titulo",
             "slug",
             "resumo",
@@ -22,7 +23,7 @@ def obter_lista_artigos_dto() -> list[ArtigoListDTO]:
         .prefetch_related(
             Prefetch(
                 "tags",
-                queryset=Tag.objects.only("nome"),
+                queryset=Tag.objects.only("id", "nome"),
             )
         )
         .order_by("-data_publicacao", "-data_criacao")
@@ -50,6 +51,7 @@ def obter_artigo_dto_por_slug(slug: str) -> ArtigoDTO:
     artigo = (
         Artigo.objects.filter(publicado=True)
         .only(
+            "id",
             "titulo",
             "conteudo",
             "data_publicacao",
@@ -62,14 +64,16 @@ def obter_artigo_dto_por_slug(slug: str) -> ArtigoDTO:
         .prefetch_related(
             Prefetch(
                 "tags",
-                queryset=Tag.objects.only("nome"),
+                queryset=Tag.objects.only("id", "nome"),
             ),
             Prefetch(
                 "comentarios",
                 queryset=Comentario.objects.filter(aprovado=True)
                 .only(
+                    "id",
                     "texto",
                     "data_criacao",
+                    "artigo_id",
                     "autor_id",
                     "autor__username",
                     "autor__first_name",

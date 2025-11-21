@@ -116,10 +116,9 @@ def test_retorna_dto_com_queries_otimizadas(
         artigo_param=artigo,
         autor_param=artigo.autor,
     )
-    # 3 queries principais: artigo+autor, tags, comentários+autores
-    # 2 queries extras do Django ao acessar comentario.autor (verificação de relação reversa)
-    # Total: 5 queries (otimizado, sem N+1)
-    with assertNumQueries(5):
+    # 3 queries otimizadas: artigo+autor (select_related), tags (prefetch_related), comentários+autores (prefetch_related com select_related)
+    # Total: 3 queries (otimizado, sem N+1)
+    with assertNumQueries(3):
         artigo_dto = obter_artigo_dto_por_slug(artigo.slug)
 
     assert isinstance(artigo_dto, ArtigoDTO)
