@@ -39,17 +39,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_extensions",
     "ckeditor",
-    # Django Debug Toolbar - Desabilitado para usar apenas Django Silk
-    # "debug_toolbar",
-    "silk",
+    "debug_toolbar",
     "blog",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    # Django Debug Toolbar Middleware - Desabilitado para usar apenas Django Silk
-    # "debug_toolbar.middleware.DebugToolbarMiddleware",
-    "silk.middleware.SilkyMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -130,28 +126,27 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Django Debug Toolbar - Desabilitado para usar apenas Django Silk
+# Django Debug Toolbar
 # https://django-debug-toolbar.readthedocs.io/
-#
-# INTERNAL_IPS = [
-#     "127.0.0.1",
-# ]
-#
-# DEBUG_TOOLBAR_CONFIG = {
-#     "HIDE_IN_STACKTRACES": (
-#         "socketserver",
-#         "threading",
-#         "wsgiref",
-#         "debug_toolbar",
-#         "django.db",
-#         "django.core.handlers",
-#         "django.core.servers",
-#         "django.utils.decorators",
-#         "django.utils.deprecation",
-#         "django.utils.functional",
-#     ),
-#     "ENABLE_STACKTRACES": True,
-# }
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+DEBUG_TOOLBAR_CONFIG = {
+    "HIDE_IN_STACKTRACES": (
+        "socketserver",
+        "threading",
+        "wsgiref",
+        "debug_toolbar",
+        "django.db",
+        "django.core.handlers",
+        "django.core.servers",
+        "django.utils.decorators",
+        "django.utils.deprecation",
+        "django.utils.functional",
+    ),
+    "ENABLE_STACKTRACES": True,
+}
 
 # CKEditor Configuration
 CKEDITOR_CONFIGS = {
